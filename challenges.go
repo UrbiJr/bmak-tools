@@ -209,7 +209,7 @@ func (bm *Bmak) Mn_w() int {
 	o := bm.GetCfDate()
 	m := bm.MnCd + bm.MnMcIndx
 	for t := 0; t == 0; {
-		n, _ = radix.ToString(rand.Float64(), 16)
+		n = radix.ToString(rand.Float64(), 16)
 		r := bm.MnCc + fmt.Sprint(m) + n
 		i := bm.Mn_s(r)
 		if 0 == bm.Bdm(i, m) {
