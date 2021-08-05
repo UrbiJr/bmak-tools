@@ -11,6 +11,22 @@ import (
 )
 
 type Bmak struct {
+	UserAgent  string
+	ScreenInfo struct {
+		AvailWidth  int `json:"availWidth"`
+		AvailHeight int `json:"availHeight"`
+		Width       int `json:"width"`
+		Height      int `json:"height"`
+		OuterWidth  int `json:"outerWidth"`
+		InnerWidth  int `json:"innerWidth"`
+		InnerHeight int `json:"innerHeight"`
+	}
+	Navigator struct {
+		ProductSub    int    `json:"productSub"`
+		Language      string `json:"language"`
+		Product       string `json:"product"`
+		PluginsLength int    `json:"pluginsLength"`
+	}
 	CookieValue string
 	Site        string
 	FormInfo    string
@@ -305,4 +321,136 @@ func (bm *Bmak) Cc(t int) func(t, a int) int64 {
 	}
 
 	return n
+}
+
+func (bm *Bmak) getBrowser() {
+	if bm.Navigator.ProductSub != 0 {
+		bm.Psub = strconv.Itoa(bm.Navigator.ProductSub)
+	}
+
+	if bm.Navigator.Language != "" {
+		bm.Lang = bm.Navigator.Language
+	}
+
+	if bm.Navigator.Product != "" {
+		bm.Prod = bm.Navigator.Product
+	}
+
+	if bm.Navigator.PluginsLength != 0 {
+		bm.Plen = bm.Navigator.PluginsLength
+	}
+}
+
+func (bm *Bmak) bc() {
+	t := 1
+	a := 1
+	n := 0
+	e := 0
+	o := 1
+	m := 1
+	r := 1
+	i := 0
+	c := 0
+	if strings.Contains(bm.UserAgent, "Chrome") {
+		c = 1
+	}
+	b := 1
+	d := 0
+	s := 1
+	k := 0
+	if bm.ScreenInfo.InnerWidth != 0 {
+		k = 1
+	}
+	l := 0
+	if bm.ScreenInfo.OuterWidth != 0 {
+		l = 1
+	}
+
+	bm.Xagg = t + (a << 1) + (e << 2) + (n << 3) + (o << 4) + (m << 5) + (r << 6) + (i << 7) + (k << 8) + (l << 9) + (c << 10) + (b << 11) + (d << 12) + (s << 13)
+}
+
+func (bm *Bmak) bmisc() {
+	bm.Pen = 0
+	bm.Wen = 0
+	bm.Den = 0
+}
+
+func (bm *Bmak) bd() string {
+	a := 0
+	e := 0
+	n := 1
+	o := 0
+	m := 1
+	r := 0
+	if strings.Contains(strings.ToLower(bm.UserAgent), "opera") {
+		r = 1
+	}
+	i := 1
+	c := 0
+	b := 0
+	d := 0
+	bm.D2 = bm.Pi(float64(bm.Z1 / 23))
+	s := 0
+	k := 0
+	if strings.Contains(bm.UserAgent, "Chrome") {
+		s = 1
+		k = 1
+	}
+	l := 0
+	u := 1
+	return ",cpen:" + fmt.Sprint(a) + ",i1:" + fmt.Sprint(e) + ",dm:" + fmt.Sprint(n) + ",cwen:" + fmt.Sprint(o) + ",non:" + fmt.Sprint(m) + ",opc:" + fmt.Sprint(r) + ",fc:" + fmt.Sprint(i) + ",sc:" + fmt.Sprint(c) + ",wrc:" + fmt.Sprint(b) + ",isc:" + fmt.Sprint(d) + ",vib:" + fmt.Sprint(s) + ",bat:" + fmt.Sprint(k) + ",x11:" + fmt.Sprint(l) + ",x12:" + fmt.Sprint(u)
+}
+
+func (bm *Bmak) Gd() string {
+	t := bm.UserAgent
+	a := bm.Ab(&t)
+	e := bm.StartTs / 2
+	n := -1
+	o := -1
+	m := -1
+	r := -1
+	i := -1
+	c := -1
+	b := -1
+
+	if bm.ScreenInfo.AvailWidth != 0 {
+		n = bm.ScreenInfo.AvailWidth
+	}
+
+	if bm.ScreenInfo.AvailHeight != 0 {
+		o = bm.ScreenInfo.AvailHeight
+	}
+
+	if bm.ScreenInfo.Width != 0 {
+		m = bm.ScreenInfo.Width
+	}
+
+	if bm.ScreenInfo.Height != 0 {
+		r = bm.ScreenInfo.Height
+	}
+
+	if bm.ScreenInfo.InnerHeight != 0 {
+		i = bm.ScreenInfo.InnerHeight
+	}
+
+	if bm.ScreenInfo.InnerWidth != 0 {
+		c = bm.ScreenInfo.InnerWidth
+	}
+
+	if bm.ScreenInfo.OuterWidth != 0 {
+		b = bm.ScreenInfo.OuterWidth
+	}
+
+	bm.Z1 = bm.Pi(float64(bm.StartTs / int64((bm.Y1 * bm.Y1))))
+	_rand := rand.New(rand.NewSource(99))
+	d := _rand.Float64()
+	s := bm.Pi(1e3 * d / 2)
+	k := fmt.Sprint(d)
+	k = k[:11] + strconv.Itoa(s)
+	bm.Brv = 0
+	bm.getBrowser()
+	bm.bc()
+	bm.bmisc()
+
+	return t + ",uaend," + fmt.Sprint(bm.Xagg) + "," + fmt.Sprint(bm.Psub) + "," + bm.Lang + "," + bm.Prod + "," + fmt.Sprint(bm.Plen) + "," + fmt.Sprint(bm.Pen) + "," + fmt.Sprint(bm.Wen) + "," + fmt.Sprint(bm.Den) + "," + fmt.Sprint(bm.Z1) + "," + fmt.Sprint(bm.D3) + "," + fmt.Sprint(n) + "," + fmt.Sprint(o) + "," + fmt.Sprint(m) + "," + fmt.Sprint(r) + "," + fmt.Sprint(c) + "," + fmt.Sprint(i) + "," + fmt.Sprint(b) + "," + bm.bd() + "," + fmt.Sprint(a) + "," + k + "," + fmt.Sprint(e) + "," + fmt.Sprint(bm.Brv) + ",loc:" + bm.Loc
 }
